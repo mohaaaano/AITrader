@@ -49,7 +49,7 @@ fees:                         # AQuA API 문서 기준 (토스증권 코스피 �
   sell_tax: 0.002             # 매도 시 증권거래세+농특세 0.20%  → 왕복 약 0.23%
 
 llm:
-  model: ""                   # NLP·LLM 담당이 확정
+  model: "gemini-3.8-flash"                   # NLP·LLM 담당이 확정
   max_headlines_per_stock: 5
   max_retries: 1
 
