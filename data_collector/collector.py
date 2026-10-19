@@ -1,7 +1,7 @@
 """4-1 데이터 수집기 — 담당: 데이터·인프라
 
 쓰는 테이블: daily_candles, news
-읽는 테이블: candidates (뉴스를 모을 종목), positions_meta (보유 종목)
+읽는 것: candidates (뉴스를 모을 종목), 포트폴리오 API (보유 종목, get_portfolio)
 """
 from common.logger import get_logger
 

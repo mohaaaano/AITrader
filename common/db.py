@@ -3,7 +3,7 @@
 테이블          쓰는 쪽               읽는 쪽
 daily_candles   4-1 데이터 수집기      4-2 후보 선정기
 news            4-1 데이터 수집기      4-3 판단 에이전트
-candidates      4-2 후보 선정기        4-3 판단 에이전트
+candidates      4-2 후보 선정기        4-3 판단 에이전트, 4-1 데이터 수집기(뉴스 대상)
 decisions       4-3 판단 에이전트      4-4 주문 관리자 (BUY·SELL·WAIT 모두 처리)
 sell_requests   4-5 청산 감시자        4-4 주문 관리자
 positions_meta  4-4 주문 관리자        4-5 청산 감시자

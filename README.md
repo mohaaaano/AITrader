@@ -9,7 +9,7 @@
 | 폴더 | 에이전트 | 담당 | 쓰는 테이블 | 읽는 테이블 |
 | --- | --- | --- | --- | --- |
 | `common/` | 공통(AQuA API, DB, 설정, 로그) | 데이터·인프라 (주문 함수는 팀장) | – | – |
-| `data_collector/` | 4-1 데이터 수집기 | 데이터·인프라 | daily_candles, news | candidates, positions_meta |
+| `data_collector/` | 4-1 데이터 수집기 | 데이터·인프라 | daily_candles, news | candidates, 포트폴리오(보유 종목) |
 | `candidate_selector/` | 4-2 후보 선정기 | 전략 | candidates | daily_candles |
 | `news_judge/` | 4-3 뉴스 분석·판단 (LLM) | NLP·LLM | decisions | candidates, news, 포트폴리오 |
 | `order_manager/` | 4-4 주문·리스크 관리자 | 팀장 | orders_log, positions_meta, 요청 status | decisions, sell_requests |
@@ -25,13 +25,15 @@
 ```bash
 git clone https://github.com/AITrader-KNU/AITrader.git
 cd AITrader
-python3 -m venv .venv
-source .venv/bin/activate          # Windows: .venv\Scripts\activate
+python -m venv .venv
+.venv\Scripts\activate             # Mac/Linux: source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env               # .env 에 팀 코드·API 키 입력
+copy .env.example .env             # Mac/Linux: cp .env.example .env  →  .env 에 팀 코드·서버 주소 입력
 python main.py --once all          # 전체 흐름을 한 번 돌려 보기
-pytest                             # 테스트
+python -m pytest                   # 테스트
 ```
+
+새 터미널을 열 때마다 가상환경을 먼저 켭니다(프롬프트 앞에 `(.venv)`). PowerShell에서 activate가 막히면 `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`를 한 번 실행합니다.
 
 `--once all`을 실행하면 각 에이전트가 `TODO` 로그만 남기고 끝납니다. 각자 자기 폴더의 `run()`을 채우면 실제로 동작합니다.
 
@@ -62,12 +64,16 @@ python main.py --once exit         # 청산 사이클만: 청산 감시 → 주�
 ## 브랜치 규칙
 
 - `main`: 학교 서버에서 돌아가는 코드. 직접 푸시하지 않습니다.
-- 각자 작업 브랜치: `feat/data-collector`, `feat/candidate-selector`, `feat/news-judge`, `feat/order-manager`, `feat/exit-monitor`
+- 각자 작업 브랜치(이미 만들어져 있음): `feat/data-collector`, `feat/candidate-selector`, `feat/news-judge`, `feat/order-manager`, `feat/exit-monitor`
 - 작업이 끝나면 Pull Request를 열고, 팀장이 확인한 뒤 `main`에 합칩니다.
-- 합치기 전에 `python main.py --once all`과 `pytest`가 통과하는지 확인합니다.
+- 합치기 전에 `python main.py --once all`과 `python -m pytest`가 통과하는지 확인합니다.
 
 ```bash
-git checkout -b feat/candidate-selector   # 처음 한 번
+git checkout main && git pull               # 최신 main 받기
+git checkout feat/candidate-selector        # 자기 브랜치로 이동 (새로 만들지 않음)
+git merge main                              # 최신 main 합치기
 git add . && git commit -m "후보 선정기: 유동성 필터 추가"
-git push -u origin feat/candidate-selector  # 이후 GitHub에서 PR 생성
+git push                                    # 이후 GitHub에서 PR 생성
 ```
+
+다른 사람의 PR이 `main`에 합쳐지면, 다음 작업 전에 위 1~3줄을 다시 실행합니다.

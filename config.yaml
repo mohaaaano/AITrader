@@ -38,7 +38,7 @@ exit:
   take_profit: 0.06           # 익절
   take_profit_sell_ratio: 1.0 # 익절 시 매도 비율 (1.0 = 전량)
   max_holding_days: 5         # 매수 후 N거래일 지나면 정리
-  sell_on_bad_news: true      # LLM이 악재로 판정하면 매도
+  # 악재 매도는 여기서 다루지 않음: 판단 에이전트가 decisions에 SELL을 내면 주문 관리자가 매도(A안)
 
 order:
   buy_type: market            # [팀장] 호가 잔량 확인 후 시장가
