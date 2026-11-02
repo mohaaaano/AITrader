@@ -125,7 +125,7 @@ def run() -> None:
 
     config = get_config()
     llm_cfg = config.get("llm", {})
-    model_name = llm_cfg.get("model", "gemini-3.8-flash")
+    model_name = llm_cfg.get("model", "gemini-3.5-flash")
     max_headlines = llm_cfg.get("max_headlines_per_stock", 5)
     api_key = env("GEMINI_API_KEY")
 
